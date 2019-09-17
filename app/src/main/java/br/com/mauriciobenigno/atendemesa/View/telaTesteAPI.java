@@ -10,10 +10,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+
+import java.util.List;
 
 public class telaTesteAPI extends AppCompatActivity {
 
@@ -30,17 +35,16 @@ public class telaTesteAPI extends AppCompatActivity {
         btResultado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<Mesa> call = new RetrofitConfig().getCaptaDadosService().BuscarMesa(Integer.toString(1));
-                call.enqueue(new Callback<Mesa>() {
+                Call<JSONArray> call = new RetrofitConfig().getCaptaDadosService().BuscarMesas();
+                call.enqueue(new Callback<JSONArray>() {
                     @Override
-                    public void onResponse(Call<Mesa> call, Response<Mesa> response) {
-                        Mesa mesa = response.body();
-                        txtResultado.setText(mesa.toString());
+                    public void onResponse(Call<JSONArray> call, Response<JSONArray> response) {
+                        txtResultado.setText(response.toString());
                     }
 
                     @Override
-                    public void onFailure(Call<Mesa> call, Throwable t) {
-                        txtResultado.setText("Erro: "+t.getMessage());
+                    public void onFailure(Call<JSONArray> call, Throwable t) {
+                        txtResultado.setText("Deu erro");
                     }
                 });
             }

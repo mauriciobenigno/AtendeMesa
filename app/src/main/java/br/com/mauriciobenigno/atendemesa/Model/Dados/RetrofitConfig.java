@@ -9,7 +9,7 @@ public class RetrofitConfig {
 
     public RetrofitConfig() {
         this.retrofit = new Retrofit.Builder()
-                .baseUrl("http://mauriciojbas.pythonanywhere.com/mesa/")
+                .baseUrl("http://mauriciojbas.pythonanywhere.com/")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
     }
