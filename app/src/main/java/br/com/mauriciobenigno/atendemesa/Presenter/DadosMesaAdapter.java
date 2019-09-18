@@ -1,5 +1,7 @@
 package br.com.mauriciobenigno.atendemesa.Presenter;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +15,7 @@ import retrofit2.Response;
 
 public class DadosMesaAdapter
 {
+    public static List<Mesa> listaMesas;
     //classe para teste
     public static List<Mesa> getMesasAPI()
     {
@@ -24,7 +27,7 @@ public class DadosMesaAdapter
             public void onResponse(Call<List<UtilMesa>> call, Response<List<UtilMesa>> response) {
                 if(!response.isSuccessful())
                 {
-                    //txtResultado.setText(response.code());
+                    Log.d("ERRO","Codigo"+Integer.toString(response.code()));
                 }
                 else {
                     List<UtilMesa> Mesas = response.body();
@@ -32,16 +35,14 @@ public class DadosMesaAdapter
                     for (UtilMesa table : Mesas)
                     {
                         mesaList.add(table.parseMesa());
-                        //saida+=table.parseMesa().getNome()+"\n";
-                        //saida+=table.Nome+"\n";
                     }
-                    //txtResultado.setText(saida);
+
                 }
             }
 
             @Override
             public void onFailure(Call<List<UtilMesa>> call, Throwable t) {
-                //txtResultado.setText("Erro");
+                Log.d("ERRO",t.getMessage());
             }
         });
         return  mesaList;

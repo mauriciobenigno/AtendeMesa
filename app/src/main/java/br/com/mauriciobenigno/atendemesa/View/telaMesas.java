@@ -12,6 +12,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -59,7 +60,9 @@ public class telaMesas extends AppCompatActivity {
 
         // recebe a lista de mesas
         //listaMesas = getListaMesas();
-        listaMesas = DadosMesaAdapter.getMesasAPI();
+        //listaMesas = DadosMesaAdapter.getMesasAPI();
+        DadosMesaAdapter.listaMesas = DadosMesaAdapter.getMesasAPI();
+        listaMesas = DadosMesaAdapter.listaMesas;
 
         // restaura o ultimo modo de visualização definido no aplicativo
         SharedPreferences sharedPreferences = getSharedPreferences("Status",MODE_PRIVATE);
@@ -108,6 +111,12 @@ public class telaMesas extends AppCompatActivity {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Toast.makeText(getApplicationContext(), listaMesas.get(i).getNome()+" - "+
                     listaMesas.get(i).getStatus(),Toast.LENGTH_LONG).show();
+            // Abre a nova tela, a qual vai permitir a mudança de status
+            Intent intent = new Intent(getApplicationContext(), telaMudaStatus.class);
+            intent.putExtra("ID", i);
+            startActivity(intent);
+
+            AdaptarVisualizacao();
         }
     };
 
