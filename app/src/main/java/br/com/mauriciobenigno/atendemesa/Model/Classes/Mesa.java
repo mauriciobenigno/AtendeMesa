@@ -6,19 +6,19 @@ public class Mesa {
 
     private int imagemID;
     private int id;
-    private String nome;
-    private String status;
-    private int lugares;
-    private String garcom;
-    private int codigoComanda;
+    private String Nome;
+    private String Status;
+    private int Lugares;
+    private String Garcom;
+    private int CodigoComanda;
 
 
     public Mesa(int id, String nome, String status, int lugares) {
         this.id = id;
-        this.nome=nome;
-        this.status = status;
+        this.Nome=nome;
+        this.Status = status;
         this.imagemID = imagemStatus(status);
-        this.lugares = lugares;
+        this.Lugares = lugares;
     }
 
     public int getImagemID() {
@@ -38,43 +38,43 @@ public class Mesa {
     }
 
     public String getNome() {
-        return nome;
+        return Nome;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.Nome = nome;
     }
 
     public String getStatus() {
-        return status;
+        return Status;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.Status = status;
     }
 
     public int getLugares() {
-        return lugares;
+        return Lugares;
     }
 
     public void setLugares(int lugares) {
-        this.lugares = lugares;
+        this.Lugares = lugares;
     }
 
     public String getGarcom() {
-        return garcom;
+        return Garcom;
     }
 
     public void setGarcom(String garcom) {
-        this.garcom = garcom;
+        this.Garcom = garcom;
     }
 
     public int getCodigoComanda() {
-        return codigoComanda;
+        return CodigoComanda;
     }
 
     public void setCodigoComanda(int codigoComanda) {
-        this.codigoComanda = codigoComanda;
+        this.CodigoComanda = codigoComanda;
     }
 
     @Override
@@ -92,15 +92,15 @@ public class Mesa {
     {
         if(status.equals("Livre"))
         {
-            return (R.drawable.numero1);
+            return (R.drawable.livre);
         }
-        else if(status.equals("Em Atendimento"))
+        else if(status.equals("Atendida"))
         {
-            return (R.drawable.numero2);
+            return (R.drawable.atendimento);
         }
         else if(status.equals("Ocupado"))
         {
-            return (R.drawable.numero3);
+            return (R.drawable.ocupada);
         }
         return (R.drawable.numero1);
     }

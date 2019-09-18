@@ -2,21 +2,18 @@ package br.com.mauriciobenigno.atendemesa.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import br.com.mauriciobenigno.atendemesa.Model.Classes.Mesa;
+import br.com.mauriciobenigno.atendemesa.Model.Classes.UtilMesa;
 import br.com.mauriciobenigno.atendemesa.Model.Dados.RetrofitConfig;
+import br.com.mauriciobenigno.atendemesa.Presenter.DadosMesaAdapter;
 import br.com.mauriciobenigno.atendemesa.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONArray;
 
 import java.util.List;
 
@@ -35,16 +32,29 @@ public class telaTesteAPI extends AppCompatActivity {
         btResultado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<JSONArray> call = new RetrofitConfig().getCaptaDadosService().BuscarMesas();
-                call.enqueue(new Callback<JSONArray>() {
+                Call<List<UtilMesa>> call = new RetrofitConfig().getCaptaDadosService().BuscarMesas();
+                call.enqueue(new Callback<List<UtilMesa>>() {
                     @Override
-                    public void onResponse(Call<JSONArray> call, Response<JSONArray> response) {
-                        txtResultado.setText(response.toString());
+                    public void onResponse(Call<List<UtilMesa>> call, Response<List<UtilMesa>> response) {
+                        if(!response.isSuccessful())
+                        {
+                            txtResultado.setText(response.code());
+                        }
+                        else {
+                            List<UtilMesa> Mesas = response.body();
+                            String saida = new String();
+                            for (UtilMesa table : Mesas)
+                            {
+                                saida+=table.parseMesa().getNome()+"\n";
+                                //saida+=table.Nome+"\n";
+                            }
+                            txtResultado.setText(saida);
+                        }
                     }
 
                     @Override
-                    public void onFailure(Call<JSONArray> call, Throwable t) {
-                        txtResultado.setText("Deu erro");
+                    public void onFailure(Call<List<UtilMesa>> call, Throwable t) {
+                        txtResultado.setText("Erro");
                     }
                 });
             }

@@ -2,9 +2,15 @@ package br.com.mauriciobenigno.atendemesa.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import br.com.mauriciobenigno.atendemesa.Model.Classes.Mesa;
+import br.com.mauriciobenigno.atendemesa.Model.Classes.UtilMesa;
+import br.com.mauriciobenigno.atendemesa.Model.Dados.RetrofitConfig;
+import br.com.mauriciobenigno.atendemesa.Presenter.DadosMesaAdapter;
 import br.com.mauriciobenigno.atendemesa.Presenter.GridViewAdapter;
 import br.com.mauriciobenigno.atendemesa.Presenter.ListViewAdapter;
 import br.com.mauriciobenigno.atendemesa.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -52,7 +58,8 @@ public class telaMesas extends AppCompatActivity {
 
 
         // recebe a lista de mesas
-        listaMesas = getListaMesas();
+        //listaMesas = getListaMesas();
+        listaMesas = DadosMesaAdapter.getMesasAPI();
 
         // restaura o ultimo modo de visualização definido no aplicativo
         SharedPreferences sharedPreferences = getSharedPreferences("Status",MODE_PRIVATE);
@@ -65,23 +72,6 @@ public class telaMesas extends AppCompatActivity {
         AdaptarVisualizacao();
 
     }
-
-
-    //classe para teste
-    public List<Mesa> getListaMesas()
-    {
-        List<Mesa> mesaList = new ArrayList<>();
-        mesaList.add(new Mesa(1,"Mesa 1", "Livre",4));
-        mesaList.add(new Mesa(2,"Mesa 2", "Livre",6));
-        mesaList.add(new Mesa(3,"Mesa 3", "Livre",5));
-        mesaList.add(new Mesa(4,"Mesa 4", "Ocupado",3));
-        mesaList.add(new Mesa(5,"Mesa 5", "Livre",2));
-        mesaList.add(new Mesa(6,"Mesa 6", "Atendimento",4));
-        mesaList.add(new Mesa(7,"Mesa 7", "Ocupado",7));
-        mesaList.add(new Mesa(8,"Mesa 8", "Livre",8));
-        return  mesaList;
-    }
-
 
     private void AdaptarVisualizacao()
     {
