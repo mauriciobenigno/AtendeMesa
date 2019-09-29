@@ -2,6 +2,7 @@ package br.com.mauriciobenigno.atendemesa.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import br.com.mauriciobenigno.atendemesa.Model.Classes.Mesa;
+import br.com.mauriciobenigno.atendemesa.Model.Classes.UtilMesa;
 import br.com.mauriciobenigno.atendemesa.Presenter.DadosMesaAdapter;
 import br.com.mauriciobenigno.atendemesa.R;
 
@@ -47,20 +48,34 @@ public class telaMudaStatus extends AppCompatActivity {
         infos +="STATUS: "+listaMesas.get(ID).getStatus();
         txtNomeStatus.setText(infos);
 
+        // Converte a mesa em Util mesa para envio para API
+        final UtilMesa mesaEnvio = new UtilMesa();
+        mesaEnvio.toMesaUtil(listaMesas.get(ID));
+
         btMudaStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(rbLivre.isChecked())
                 {
                     //Chamar api para setar esse id como Livre
+                    mesaEnvio.Status="Livre";
+                    DadosMesaAdapter.atualizaMesa(Integer.parseInt(mesaEnvio.id),mesaEnvio);
+                    //listaMesas.get(ID).setStatus("Livre");
+                    finish();
                 }
                 else if(rbAtendida.isChecked())
                 {
                     //Chamar API para setar esse id como Atendida
+                    mesaEnvio.Status="Atendida";
+                    DadosMesaAdapter.atualizaMesa(Integer.parseInt(mesaEnvio.id),mesaEnvio);
+                    finish();
                 }
                 else
                 {
                     //Chamar API para setar esse id como ocupado
+                    mesaEnvio.Status="Ocupado";
+                    DadosMesaAdapter.atualizaMesa(Integer.parseInt(mesaEnvio.id),mesaEnvio);
+                    finish();
                 }
             }
         });

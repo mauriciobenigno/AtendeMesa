@@ -2,6 +2,10 @@ package br.com.mauriciobenigno.atendemesa.Presenter;
 
 import android.util.Log;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +13,7 @@ import java.util.List;
 import br.com.mauriciobenigno.atendemesa.Model.Classes.Mesa;
 import br.com.mauriciobenigno.atendemesa.Model.Classes.UtilMesa;
 import br.com.mauriciobenigno.atendemesa.Model.Dados.RetrofitConfig;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,7 +21,7 @@ import retrofit2.Response;
 public class DadosMesaAdapter
 {
     public static List<Mesa> listaMesas;
-    //classe para teste
+    //classe para pegar a lista de mesas
     public static List<Mesa> getMesasAPI()
     {
         final List<Mesa> mesaList = new ArrayList<>();
@@ -46,5 +51,34 @@ public class DadosMesaAdapter
             }
         });
         return  mesaList;
+    }
+    // Classe para alterar dados da mesa
+    public static void atualizaMesa(int id, UtilMesa mesa)
+    {
+        //JSONObject json = mesa.toJson();
+        Call<UtilMesa> call = new RetrofitConfig().getCaptaDadosService().atualizaMesa(id,mesa);
+        //Call<ResponseBody> call = new RetrofitConfig().getCaptaDadosService().atualizaMesa(id,
+        //        mesa.Nome,mesa.Status,mesa.Lugares,mesa.Garcom,mesa.CodigoComanda);
+
+        call.enqueue(new Callback<UtilMesa>() {
+            @Override
+            public void onResponse(Call<UtilMesa> call, Response<UtilMesa> response) {
+                if(!response.isSuccessful())
+                {
+                    Log.d("ERROPUT","Codigo "+Integer.toString(response.code()));
+                }
+                else
+                {
+                    Log.d("ERROPUT","DEU CERTO ");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UtilMesa> call, Throwable t) {
+                Log.d("ERROPUT",t.getMessage());
+            }
+        });
+
+
     }
 }

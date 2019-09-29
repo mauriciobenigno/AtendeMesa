@@ -110,7 +110,7 @@ public class telaMesas extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Toast.makeText(getApplicationContext(), listaMesas.get(i).getNome()+" - "+
-                    listaMesas.get(i).getStatus(),Toast.LENGTH_LONG).show();
+                    listaMesas.get(i).getStatus()+" - ID "+listaMesas.get(i).getId(),Toast.LENGTH_LONG).show();
             // Abre a nova tela, a qual vai permitir a mudança de status
             Intent intent = new Intent(getApplicationContext(), telaMudaStatus.class);
             intent.putExtra("ID", i);
