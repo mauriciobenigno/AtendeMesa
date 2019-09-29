@@ -1,6 +1,7 @@
 package br.com.mauriciobenigno.atendemesa;
 
 import androidx.appcompat.app.AppCompatActivity;
+import br.com.mauriciobenigno.atendemesa.Presenter.DadosMesaAdapter;
 import br.com.mauriciobenigno.atendemesa.View.telaMesas;
 import br.com.mauriciobenigno.atendemesa.View.telaTesteAPI;
 
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
         btAbrirTela = (Button)findViewById(R.id.btAbrirTelaTeste);
         btTestarAPI = (Button)findViewById(R.id.btTesteAPI);
+
+        DadosMesaAdapter.listaMesas = DadosMesaAdapter.getMesasAPI();
 
         btAbrirTela.setOnClickListener(new View.OnClickListener() {
             @Override

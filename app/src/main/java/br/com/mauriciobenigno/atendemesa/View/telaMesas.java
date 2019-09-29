@@ -15,6 +15,9 @@ import retrofit2.Response;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,6 +51,10 @@ public class telaMesas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_mesas);
 
+        // recebe a lista de mesas
+        DadosMesaAdapter.listaMesas = DadosMesaAdapter.getMesasAPI();
+        listaMesas = DadosMesaAdapter.listaMesas;
+
         stubListMesa = (ViewStub)findViewById(R.id.stub_list_mesas);
         stubGridMesa = (ViewStub)findViewById(R.id.stub_grid_mesas);
 
@@ -57,23 +64,40 @@ public class telaMesas extends AppCompatActivity {
         listViewMesas = findViewById(R.id.listMesas);
         gridViewMesas = findViewById(R.id.gridMesas);
 
+        listViewMesas.setOnItemClickListener(onItemClickListener);
+        gridViewMesas.setOnItemClickListener(onItemClickListener);
 
-        // recebe a lista de mesas
-        //listaMesas = getListaMesas();
-        //listaMesas = DadosMesaAdapter.getMesasAPI();
+        /*// restaura o ultimo modo de visualização definido no aplicativo
+        SharedPreferences sharedPreferences = getSharedPreferences("Status",MODE_PRIVATE);
+        modoVisualizacao = sharedPreferences.getInt("ModoVisualizacao", VISUALIZAR_MODO_LISTA);
+
+        AdaptarVisualizacao();*/
+        Carrega();
+        Carrega();
+    }
+
+    public void Carrega()
+    {
+        super.onStart();
         DadosMesaAdapter.listaMesas = DadosMesaAdapter.getMesasAPI();
+        SystemClock.sleep(2000);
         listaMesas = DadosMesaAdapter.listaMesas;
+/*
+        while(listaMesas.size()==0)
+        {
+            DadosMesaAdapter.listaMesas = DadosMesaAdapter.getMesasAPI();
+            listaMesas = DadosMesaAdapter.listaMesas;
+        }*/
 
         // restaura o ultimo modo de visualização definido no aplicativo
         SharedPreferences sharedPreferences = getSharedPreferences("Status",MODE_PRIVATE);
         modoVisualizacao = sharedPreferences.getInt("ModoVisualizacao", VISUALIZAR_MODO_LISTA);
-
-        listViewMesas.setOnItemClickListener(onItemClickListener);
-        gridViewMesas.setOnItemClickListener(onItemClickListener);
-
+        SharedPreferences.Editor editor =  sharedPreferences.edit();
+        editor.putInt("ModoVisualizacao",modoVisualizacao);
+        editor.commit();
 
         AdaptarVisualizacao();
-
+        Log.d("VISUA", "Carregou visualizacao, LISTA TAMANHO: "+listaMesas.size());
     }
 
     private void AdaptarVisualizacao()
@@ -88,6 +112,7 @@ public class telaMesas extends AppCompatActivity {
             stubListMesa.setVisibility(View.GONE);
             stubGridMesa.setVisibility(View.VISIBLE);
         }
+        Log.d("VISUA", "Carregou visualizacao, LISTA TAMANHO: "+listaMesas.size());
         setAdaptador();
     }
 
@@ -115,7 +140,7 @@ public class telaMesas extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), telaMudaStatus.class);
             intent.putExtra("ID", i);
             startActivity(intent);
-
+            finish();
             AdaptarVisualizacao();
         }
     };
@@ -144,12 +169,13 @@ public class telaMesas extends AppCompatActivity {
                     modoVisualizacao = VISUALIZAR_MODO_GRADE;
 
                 }
-                AdaptarVisualizacao();
                 // salva preferencias de visualização
                 SharedPreferences sharedPreferences  = getSharedPreferences("Status", MODE_PRIVATE);
                 SharedPreferences.Editor editor =  sharedPreferences.edit();
                 editor.putInt("ModoVisualizacao",modoVisualizacao);
                 editor.commit();
+                // adapta a visualizacao
+                AdaptarVisualizacao();
         }
         return true;
     }

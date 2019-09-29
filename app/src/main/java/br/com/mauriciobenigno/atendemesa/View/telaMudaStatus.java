@@ -61,22 +61,23 @@ public class telaMudaStatus extends AppCompatActivity {
                     mesaEnvio.Status="Livre";
                     DadosMesaAdapter.atualizaMesa(Integer.parseInt(mesaEnvio.id),mesaEnvio);
                     //listaMesas.get(ID).setStatus("Livre");
-                    finish();
                 }
                 else if(rbAtendida.isChecked())
                 {
                     //Chamar API para setar esse id como Atendida
                     mesaEnvio.Status="Atendida";
                     DadosMesaAdapter.atualizaMesa(Integer.parseInt(mesaEnvio.id),mesaEnvio);
-                    finish();
                 }
                 else
                 {
                     //Chamar API para setar esse id como ocupado
                     mesaEnvio.Status="Ocupado";
                     DadosMesaAdapter.atualizaMesa(Integer.parseInt(mesaEnvio.id),mesaEnvio);
-                    finish();
                 }
+                DadosMesaAdapter.listaMesas = DadosMesaAdapter.getMesasAPI();
+                Intent intent = new Intent(getApplicationContext(), telaMesas.class);
+                startActivity(intent);
+                finish();
             }
         });
 

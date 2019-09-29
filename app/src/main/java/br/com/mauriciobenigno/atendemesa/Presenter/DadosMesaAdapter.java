@@ -55,10 +55,7 @@ public class DadosMesaAdapter
     // Classe para alterar dados da mesa
     public static void atualizaMesa(int id, UtilMesa mesa)
     {
-        //JSONObject json = mesa.toJson();
         Call<UtilMesa> call = new RetrofitConfig().getCaptaDadosService().atualizaMesa(id,mesa);
-        //Call<ResponseBody> call = new RetrofitConfig().getCaptaDadosService().atualizaMesa(id,
-        //        mesa.Nome,mesa.Status,mesa.Lugares,mesa.Garcom,mesa.CodigoComanda);
 
         call.enqueue(new Callback<UtilMesa>() {
             @Override
