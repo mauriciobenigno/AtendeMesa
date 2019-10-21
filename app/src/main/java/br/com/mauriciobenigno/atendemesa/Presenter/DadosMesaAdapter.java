@@ -32,7 +32,7 @@ public class DadosMesaAdapter
             public void onResponse(Call<List<UtilMesa>> call, Response<List<UtilMesa>> response) {
                 if(!response.isSuccessful())
                 {
-                    Log.d("ERRO","Codigo"+Integer.toString(response.code()));
+                    Log.d("ERROP","Codigo"+Integer.toString(response.code()));
                 }
                 else {
                     List<UtilMesa> Mesas = response.body();
@@ -47,7 +47,7 @@ public class DadosMesaAdapter
 
             @Override
             public void onFailure(Call<List<UtilMesa>> call, Throwable t) {
-                Log.d("ERRO",t.getMessage());
+                Log.d("ERROP",t.getMessage());
             }
         });
         return  mesaList;

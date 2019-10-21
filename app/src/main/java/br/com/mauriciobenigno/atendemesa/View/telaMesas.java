@@ -51,8 +51,7 @@ public class telaMesas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_mesas);
 
-        // recebe a lista de mesas
-        DadosMesaAdapter.listaMesas = DadosMesaAdapter.getMesasAPI();
+        // recebe a lista de mesas pre carregada
         listaMesas = DadosMesaAdapter.listaMesas;
 
         stubListMesa = (ViewStub)findViewById(R.id.stub_list_mesas);
@@ -67,37 +66,11 @@ public class telaMesas extends AppCompatActivity {
         listViewMesas.setOnItemClickListener(onItemClickListener);
         gridViewMesas.setOnItemClickListener(onItemClickListener);
 
-        /*// restaura o ultimo modo de visualização definido no aplicativo
-        SharedPreferences sharedPreferences = getSharedPreferences("Status",MODE_PRIVATE);
-        modoVisualizacao = sharedPreferences.getInt("ModoVisualizacao", VISUALIZAR_MODO_LISTA);
-
-        AdaptarVisualizacao();*/
-        Carrega();
-        Carrega();
-    }
-
-    public void Carrega()
-    {
-        super.onStart();
-        DadosMesaAdapter.listaMesas = DadosMesaAdapter.getMesasAPI();
-        SystemClock.sleep(2000);
-        listaMesas = DadosMesaAdapter.listaMesas;
-/*
-        while(listaMesas.size()==0)
-        {
-            DadosMesaAdapter.listaMesas = DadosMesaAdapter.getMesasAPI();
-            listaMesas = DadosMesaAdapter.listaMesas;
-        }*/
-
         // restaura o ultimo modo de visualização definido no aplicativo
         SharedPreferences sharedPreferences = getSharedPreferences("Status",MODE_PRIVATE);
         modoVisualizacao = sharedPreferences.getInt("ModoVisualizacao", VISUALIZAR_MODO_LISTA);
-        SharedPreferences.Editor editor =  sharedPreferences.edit();
-        editor.putInt("ModoVisualizacao",modoVisualizacao);
-        editor.commit();
 
         AdaptarVisualizacao();
-        Log.d("VISUA", "Carregou visualizacao, LISTA TAMANHO: "+listaMesas.size());
     }
 
     private void AdaptarVisualizacao()
@@ -112,7 +85,6 @@ public class telaMesas extends AppCompatActivity {
             stubListMesa.setVisibility(View.GONE);
             stubGridMesa.setVisibility(View.VISIBLE);
         }
-        Log.d("VISUA", "Carregou visualizacao, LISTA TAMANHO: "+listaMesas.size());
         setAdaptador();
     }
 
@@ -122,11 +94,13 @@ public class telaMesas extends AppCompatActivity {
         {
             listViewAdapter = new ListViewAdapter(this,R.layout.list_mesa, listaMesas);
             listViewMesas.setAdapter(listViewAdapter);
+            modoVisualizacao = VISUALIZAR_MODO_LISTA;
         }
         else
         {
             gridViewAdapter = new GridViewAdapter(this,R.layout.grid_mesa, listaMesas);
             gridViewMesas.setAdapter(gridViewAdapter);
+            modoVisualizacao = VISUALIZAR_MODO_GRADE;
         }
     }
 
@@ -153,6 +127,7 @@ public class telaMesas extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("VISUA", "CHEGOU AQUI 22 LISTA TAMANHO: "+listaMesas.size());
         switch (item.getItemId())
         {
             case R.id.menu_item_visualizacao:
