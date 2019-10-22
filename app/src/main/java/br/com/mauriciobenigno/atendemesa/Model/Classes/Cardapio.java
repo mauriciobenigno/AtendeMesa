@@ -20,7 +20,7 @@ public class Cardapio {
     }
 
     public void setCodComanda(String codComanda) {
-        this.codComanda = codComanda;
+        this.codComanda = Integer.parseInt(codComanda);
     }
 
     public List<String> getComida() {
