@@ -3,47 +3,27 @@ package br.com.mauriciobenigno.atendemesa.Model.Classes;
 import java.util.List;
 
 public class Cardapio {
-    private int codComanda;
-    private List<String> Comida;
-    private List<String> Bebida;
-    private String Observacao;
+    private List<String> Comidas;
+    private List<String> Bebidas;
 
-    public Cardapio(int codComanda, List<String> comida, List<String> bebida, String observacao) {
-        this.codComanda = codComanda;
-        Comida = comida;
-        Bebida = bebida;
-        Observacao = observacao;
+    public Cardapio(List<String> comidas, List<String> bebidas) {
+        Comidas = comidas;
+        Bebidas = bebidas;
     }
 
-    public int getCodComanda() {
-        return codComanda;
+    public List<String> getComidas() {
+        return Comidas;
     }
 
-    public void setCodComanda(String codComanda) {
-        this.codComanda = Integer.parseInt(codComanda);
+    public void setComidas(List<String> comidas) {
+        Comidas = comidas;
     }
 
-    public List<String> getComida() {
-        return Comida;
+    public List<String> getBebidas() {
+        return Bebidas;
     }
 
-    public void setComida(List<String> comida) {
-        Comida = comida;
-    }
-
-    public List<String> getBebida() {
-        return Bebida;
-    }
-
-    public void setBebida(List<String> bebida) {
-        Bebida = bebida;
-    }
-
-    public String getObservacao() {
-        return Observacao;
-    }
-
-    public void setObservacao(String observacao) {
-        Observacao = observacao;
+    public void setBebidas(List<String> bebidas) {
+        Bebidas = bebidas;
     }
 }

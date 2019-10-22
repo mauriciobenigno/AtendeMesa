@@ -14,36 +14,34 @@ import retrofit2.Response;
 
 public class DadosCardapioAdapter {
 
-    public static Cardapio getCardapio(int id)
+    public static Cardapio cardap;
+
+    public static Cardapio getCardapio()
     {
-        final Cardapio retorno = new Cardapio(0,new ArrayList<String>(),new ArrayList<String>(), "ik");
-        Call<UtilCardapio> call = new RetrofitConfig().getCaptaDadosService().BuscarCardapio(Integer.toString(id));
-        call.enqueue(new Callback<UtilCardapio>() {
+        final Cardapio retorno = new Cardapio(new ArrayList<String>(),new ArrayList<String>());
+
+        Call<List<UtilCardapio>> call = new RetrofitConfig().getCaptaDadosService().BuscarCardapio();
+        call.enqueue(new Callback<List<UtilCardapio>>() {
             @Override
-            public void onResponse(Call<UtilCardapio> call, Response<UtilCardapio> response) {
+            public void onResponse(Call<List<UtilCardapio>> call, Response<List<UtilCardapio>> response) {
                 if(!response.isSuccessful())
                 {
-                    Log.d("ERROP","Codigo"+Integer.toString(response.code()));
+                    Log.d("ERROAPI","Codigo"+Integer.toString(response.code()));
                 }
                 else {
-                    UtilCardapio utilCardapio = response.body();
-                    retorno.setCodComanda(utilCardapio.codComanda);
-                    retorno.setComida(utilCardapio.Comida);
-                    retorno.setBebida(utilCardapio.Bebida);
-                    retorno.setObservacao(utilCardapio.Observacao);
+                    List<UtilCardapio> card = response.body();
+                    UtilCardapio cardapio = card.get(0);
+                    retorno.setComidas(cardapio.Comidas);
+                    retorno.setBebidas(cardapio.Bebidas);
                 }
             }
 
             @Override
-            public void onFailure(Call<UtilCardapio> call, Throwable t) {
-                Log.d("ERROP",t.getMessage());
+            public void onFailure(Call<List<UtilCardapio>> call, Throwable t) {
+                Log.d("ERROAPI","Erro:"+t.getMessage());
             }
         });
+
         return retorno;
     }
-
-    /*public static List<Cardapio> getCardapios()
-    {
-
-    }*/
 }
