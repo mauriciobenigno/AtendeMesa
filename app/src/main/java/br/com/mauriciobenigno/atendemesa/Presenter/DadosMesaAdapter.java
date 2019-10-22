@@ -1,19 +1,11 @@
 package br.com.mauriciobenigno.atendemesa.Presenter;
 
 import android.util.Log;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-
 import br.com.mauriciobenigno.atendemesa.Model.Classes.Mesa;
 import br.com.mauriciobenigno.atendemesa.Model.Classes.UtilMesa;
 import br.com.mauriciobenigno.atendemesa.Model.Dados.RetrofitConfig;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
