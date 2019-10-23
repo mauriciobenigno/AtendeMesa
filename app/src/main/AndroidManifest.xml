@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.telaAtendimentoMesa"></activity>
+        <activity android:name=".View.telaConcluirPedido"></activity>
+        <activity android:name=".View.telaAtendimentoMesa" />
         <activity android:name=".View.telaMudaStatus" />
         <activity android:name=".View.telaTesteAPI" />
         <activity android:name=".View.telaMesas" />

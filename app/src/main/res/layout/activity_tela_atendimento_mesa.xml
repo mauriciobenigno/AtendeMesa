@@ -71,6 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/comboBebidas" />
 
     <ListView
+        android:id="@+id/listViewItens"
         android:layout_width="343dp"
         android:layout_height="221dp"
         android:layout_marginStart="34dp"
